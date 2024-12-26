@@ -17,8 +17,8 @@ alg = HomotopyContinuationJL{true}(; threading = false)
         @test sol.u[1][1] ≈ 2.0
 
         @testset "no real solutions" begin
-            prob = NonlinearProblem(1.0, 1.0) do u, p
-                return u * u - p + p
+            prob = NonlinearProblem(1.0, 0.5) do u, p
+                return u * u - 2p * u  + p
             end
             sol = solve(prob, alg)
             @test length(sol) == 1

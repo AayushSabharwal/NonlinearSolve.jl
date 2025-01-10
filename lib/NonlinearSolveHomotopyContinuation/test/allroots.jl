@@ -73,6 +73,7 @@ function f(u, p)
 end
 
 @testset "vector u - $iip" for (rhs, iip) in [(f, "oop"), (f!, "iip")]
+    sol = nothing
     @testset "`NonlinearProblem`" begin
         prob = NonlinearProblem(rhs, [1.0, 2.0], [2.0, 3.0])
         sol = solve(prob, alg)
@@ -108,7 +109,6 @@ end
         @test sol2 isa EnsembleSolution
         @test sol2.converged
         @test length(sol.u) == length(sol2.u)
-        display(sol.u)
         for nlsol2 in sol2.u
             @test any(nlsol -> isapprox(polynomialize(nlsol2.u, prob.p), nlsol.u; rtol = 1e-8), sol.u)
         end

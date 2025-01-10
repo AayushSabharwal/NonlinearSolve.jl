@@ -77,7 +77,7 @@ function HC.ModelKit.evaluate_and_jacobian!(u, U, sys::HomotopySystemWrapper{Sca
         x = real(first(x))
         u[1], U[1] = DI.value_and_derivative(f.f, sys.prep, sys.autodiff, x, DI.Constant(p))
     end
-    return nothing
+    return u, U
 end
 
 function HC.ModelKit.taylor!(u::AbstractVector, ::Val{N}, sys::HomotopySystemWrapper{Inplace}, x::HC.ModelKit.TaylorVector{M}, p = nothing) where {N, M}
